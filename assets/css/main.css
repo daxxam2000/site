@@ -1,0 +1,441 @@
+/* ─────────────────────────────────────────────────────────────────
+   BRUTALIST PERSONAL SITE — main.css
+   No frameworks. No CSS-in-JS. No build step. Just CSS.
+   Edit freely.
+   ───────────────────────────────────────────────────────────────── */
+
+/* ── reset ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, blockquote { margin: 0; padding: 0; }
+img, video { max-width: 100%; height: auto; display: block; }
+button { font: inherit; cursor: pointer; }
+
+/* ── tokens ────────────────────────────────────────────────────── */
+:root {
+  --ink: #111;
+  --paper: #f4f1ea;          /* warm off-white, like newsprint */
+  --rule: #111;
+  --accent: #c8392b;         /* one accent: stop-sign red */
+  --muted: #555;
+  --grid: 1.4rem;            /* baseline rhythm */
+  --serif: "Iowan Old Style", "Georgia", "Charter", serif;
+  --mono:  "iA Writer Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
+  --sans:  -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Inter", sans-serif;
+}
+
+/* ── document ──────────────────────────────────────────────────── */
+html { font-size: 17px; -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  line-height: 1.5;
+  /* visible vertical baseline grid */
+  background-image: linear-gradient(
+    to bottom,
+    transparent calc(var(--grid) - 1px),
+    rgba(17,17,17,0.04) calc(var(--grid) - 1px),
+    rgba(17,17,17,0.04) var(--grid)
+  );
+  background-size: 100% var(--grid);
+}
+
+/* ── layout ────────────────────────────────────────────────────── */
+.wrap {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0 1.4rem;
+}
+
+/* ── masthead ──────────────────────────────────────────────────── */
+.masthead {
+  border-bottom: 2px solid var(--rule);
+  padding: 1.4rem 0 0.7rem;
+  margin-bottom: 1.4rem;
+}
+.masthead-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.masthead .site-title {
+  font-family: var(--mono);
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.masthead .site-title a { color: inherit; text-decoration: none; }
+.masthead .site-meta {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.tagline {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 0.4rem;
+}
+
+/* ── nav ───────────────────────────────────────────────────────── */
+.nav {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.5rem 0;
+  margin-bottom: 2.1rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0 1.2rem; }
+.nav a { color: var(--ink); text-decoration: none; padding: 0.2rem 0; }
+.nav a:hover, .nav a[aria-current="page"] {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.2rem 0.4rem;
+}
+
+/* ── headings ──────────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+h1 { font-size: 2.4rem; margin: 1.4rem 0 0.7rem; }
+h2 { font-size: 1.6rem; margin: 1.4rem 0 0.7rem; }
+h3 { font-size: 1.2rem; margin: 1.4rem 0 0.4rem; }
+
+/* ── prose ─────────────────────────────────────────────────────── */
+.prose p,
+.prose ul,
+.prose ol,
+.prose blockquote,
+.prose figure { margin-bottom: var(--grid); }
+.prose ul, .prose ol { padding-left: 1.4rem; }
+.prose a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.prose a:hover { background: var(--accent); color: var(--paper); text-decoration: none; }
+.prose blockquote {
+  border-left: 4px solid var(--ink);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--muted);
+}
+.prose code {
+  font-family: var(--mono);
+  font-size: 0.92em;
+  background: rgba(17,17,17,0.07);
+  padding: 0.05em 0.3em;
+}
+.prose pre {
+  font-family: var(--mono);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1rem;
+  overflow-x: auto;
+  border: 1px solid var(--ink);
+  margin-bottom: var(--grid);
+}
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--ink);
+  margin: 2.1rem 0;
+}
+
+/* ── post / page meta ─────────────────────────────────────────── */
+.meta {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.7rem;
+}
+.meta .cat {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.1rem 0.5rem;
+  margin-right: 0.4rem;
+  text-decoration: none;
+}
+.meta .cat:hover { background: var(--accent); }
+
+/* ── post listing ─────────────────────────────────────────────── */
+.post-list {
+  list-style: none;
+  border-top: 1px solid var(--ink);
+}
+.post-list li {
+  border-bottom: 1px solid var(--ink);
+  padding: 1rem 0;
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+}
+.post-list .date {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.post-list h3 { margin: 0; font-size: 1.15rem; line-height: 1.3; }
+.post-list h3 a { color: var(--ink); text-decoration: none; }
+.post-list h3 a:hover { background: var(--accent); color: var(--paper); }
+.post-list .excerpt { color: var(--muted); font-size: 0.95rem; margin-top: 0.3rem; }
+.post-list .post-cat {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--ink);
+  padding: 0.05rem 0.4rem;
+  margin-left: 0.4rem;
+}
+
+/* ── about page ───────────────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 12rem 1fr;
+  gap: 1.4rem;
+  align-items: start;
+}
+.about-grid .portrait {
+  border: 2px solid var(--ink);
+  filter: grayscale(1) contrast(1.05);
+}
+@media (max-width: 600px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .about-grid .portrait { max-width: 14rem; }
+}
+
+/* ── photo project grid ───────────────────────────────────────── */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1.4rem;
+  margin: 1.4rem 0 2.8rem;
+}
+.project-card {
+  border: 1px solid var(--ink);
+  padding: 0.7rem;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+}
+.project-card a { color: var(--ink); text-decoration: none; }
+.project-card .cover {
+  aspect-ratio: 4/3;
+  background: var(--ink);
+  filter: grayscale(1);
+  margin-bottom: 0.5rem;
+  object-fit: cover;
+  width: 100%;
+}
+.project-card h3 { font-size: 1.05rem; margin: 0; }
+.project-card .year {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 0.3rem;
+}
+.project-card:hover { background: var(--ink); color: var(--paper); }
+.project-card:hover h3, .project-card:hover .year { color: var(--paper); }
+
+/* ── photo project page ───────────────────────────────────────── */
+.photo-stack img { border: 1px solid var(--ink); margin-bottom: var(--grid); }
+
+/* ── ttrpg list ───────────────────────────────────────────────── */
+.ttrpg-list {
+  list-style: none;
+  border-top: 2px solid var(--ink);
+}
+.ttrpg-list > li {
+  border-bottom: 2px solid var(--ink);
+  padding: 1.4rem 0;
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 1.4rem;
+}
+.ttrpg-list .cover {
+  border: 1px solid var(--ink);
+  aspect-ratio: 3/4;
+  background: var(--ink);
+  filter: grayscale(1);
+  width: 100%;
+  object-fit: cover;
+}
+.ttrpg-list h3 { font-size: 1.4rem; margin: 0 0 0.4rem; }
+.ttrpg-list .status {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--ink);
+  padding: 0.05rem 0.4rem;
+  margin-left: 0.4rem;
+}
+.ttrpg-list .status.released  { background: var(--ink); color: var(--paper); }
+.ttrpg-list .status.in-progress { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+.ttrpg-list .blurb { color: var(--ink); margin: 0.4rem 0 0.7rem; }
+.ttrpg-list .links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+@media (max-width: 600px) {
+  .ttrpg-list > li { grid-template-columns: 1fr; }
+  .ttrpg-list .cover { max-width: 12rem; }
+}
+
+/* ── buttons / chips ──────────────────────────────────────────── */
+.btn {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 2px solid var(--ink);
+  padding: 0.4rem 0.7rem;
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--paper);
+}
+.btn:hover { background: var(--ink); color: var(--paper); }
+.btn.accent { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+.btn.accent:hover { background: var(--ink); border-color: var(--ink); }
+
+/* ── footer ───────────────────────────────────────────────────── */
+.foot {
+  border-top: 2px solid var(--ink);
+  margin-top: 2.8rem;
+  padding: 1.4rem 0 2.8rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+}
+
+/* ── section labels (file-system style) ───────────────────────── */
+.label {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.2rem;
+  margin: 2.1rem 0 0.7rem;
+  display: block;
+}
+
+/* ── selection ────────────────────────────────────────────────── */
+::selection { background: var(--accent); color: var(--paper); }
+
+/* ─────────────────────────────────────────────────────────────────
+   FOOTNOTES (littlefoot.js v4)
+   These rules override littlefoot.css to match the brutalist theme.
+   When littlefoot mounts, it hides the default footnote list at the
+   bottom of the post and replaces inline references with a numbered
+   button that expands a popover on click.
+   ───────────────────────────────────────────────────────────────── */
+
+/* The little number-in-a-box that replaces the [^1] marker. */
+.littlefoot__button {
+  /* reset littlefoot's pill */
+  background: var(--paper) !important;
+  border: 1.5px solid var(--ink) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--ink) !important;
+  font-family: var(--mono) !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0;
+  line-height: 1 !important;
+  height: auto !important;
+  width: auto !important;
+  min-width: 1.4rem;
+  margin: 0 0.15rem 0 0.05rem;
+  padding: 0.15rem 0.35rem !important;
+  vertical-align: super;
+  transform: translateY(-0.05rem);
+  transition: none !important;
+}
+.littlefoot__button:hover,
+.littlefoot__button.is-active {
+  background: var(--ink) !important;
+  color: var(--paper) !important;
+}
+/* the dot pattern that littlefoot draws after the number — kill it */
+.littlefoot__button .littlefoot__circle { display: none !important; }
+
+/* The popover that opens above/below the button. */
+.littlefoot__popover {
+  background: var(--paper) !important;
+  border: 2px solid var(--ink) !important;
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 var(--ink) !important;
+  color: var(--ink) !important;
+  font-family: var(--serif) !important;
+  font-size: 0.95rem !important;
+  max-width: 26rem !important;
+  padding: 0 !important;
+}
+.littlefoot__popover::before,
+.littlefoot__popover::after { display: none !important; } /* no tail/arrow */
+
+.littlefoot__wrapper {
+  background: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+.littlefoot__content {
+  padding: 0.8rem 1rem !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  font-family: var(--serif) !important;
+}
+.littlefoot__content p { margin: 0 0 0.5rem; }
+.littlefoot__content p:last-child { margin-bottom: 0; }
+.littlefoot__content a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.littlefoot__content a:hover { background: var(--accent); color: var(--paper); text-decoration: none; }
+
+/* Header strip on top of the popover — adds a small mono label. */
+.littlefoot__popover::before {
+  display: block !important;
+  content: "FOOTNOTE";
+  font-family: var(--mono) !important;
+  font-size: 0.66rem !important;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--ink) !important;
+  color: var(--paper) !important;
+  padding: 0.25rem 0.5rem !important;
+  border-radius: 0 !important;
+}
+
+/* Hide the original footnote list when JS is enabled (littlefoot replaces it
+   with a popover). The `.js` class is set in the head, so this never flashes. */
+html.js .footnotes { display: none; }
+

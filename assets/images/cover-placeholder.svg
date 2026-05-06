@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Cover placeholder">
+  <rect width="400" height="300" fill="#111"/>
+  <line x1="0" y1="0" x2="400" y2="300" stroke="#f4f1ea" stroke-width="1"/>
+  <line x1="400" y1="0" x2="0" y2="300" stroke="#f4f1ea" stroke-width="1"/>
+  <text x="200" y="160" font-family="ui-monospace, Menlo, monospace" font-size="16" fill="#f4f1ea" text-anchor="middle" letter-spacing="3">COVER</text>
+</svg>
