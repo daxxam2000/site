@@ -1,0 +1,28 @@
+---
+layout: default
+---
+<article class="photo-project prose">
+  <p class="meta">
+    <a class="cat" href="{{ '/photography/' | relative_url }}">Photography</a>
+    {% if page.year %}<span>{{ page.year }}</span>{% endif %}
+    {% if page.location %}<span>· {{ page.location }}</span>{% endif %}
+  </p>
+  <h1>{{ page.title }}</h1>
+  {% if page.subtitle %}<p><em>{{ page.subtitle }}</em></p>{% endif %}
+
+  {{ content }}
+
+  {% if page.images and page.images.size > 0 %}
+  <div class="photo-stack">
+    {% for img in page.images %}
+      <figure>
+        <img src="{{ img.src | relative_url }}" alt="{{ img.alt | default: page.title }}">
+        {% if img.caption %}<figcaption class="meta">{{ img.caption }}</figcaption>{% endif %}
+      </figure>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <hr>
+  <p class="meta"><a href="{{ '/photography/' | relative_url }}">← All projects</a></p>
+</article>
