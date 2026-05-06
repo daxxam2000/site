@@ -4,9 +4,14 @@ title: Essays
 permalink: /category/essays/
 category: essays
 ---
-<article class="prose">
-  <h1>Essays</h1>
-  <p class="meta">Posts in <em>essays</em>.</p>
+{% include hero.html
+   title="Essays"
+   tone="ink"
+   index="3.0 / Section"
+   sub="Longer arguments. Cultural criticism, technology, design, the present."
+   num="03" %}
+
+<article class="prose" style="max-width:none;">
   {% assign posts = site.categories.essays %}
   {% include post-list.html posts=posts %}
 </article>

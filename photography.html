@@ -3,10 +3,18 @@ layout: default
 title: Photography
 permalink: /photography/
 ---
-<article class="prose">
-  <h1>Photography</h1>
-  <p>Selected projects. Each entry is a self-contained body of work.</p>
+{% include hero.html
+   title="Photography"
+   tone="ink"
+   index="5.0 / Section"
+   sub="Selected projects. Each entry is a self-contained body of work."
+   num="05" %}
 
+<section class="project-strip bleed">
+  <div class="section-head" style="border-top: 1px solid var(--rule-on-dark); color: rgba(237,237,237,0.65);">
+    <span class="num">§ Selected</span>
+    <span class="label" style="color: var(--paper);">2020 — {{ site.time | date: "%Y" }}</span>
+  </div>
   <div class="project-grid">
     {% assign projects = site.photo_projects | sort: "year" | reverse %}
     {% for p in projects %}
@@ -16,12 +24,11 @@ permalink: /photography/
         {% else %}
           <span class="cover" aria-hidden="true"></span>
         {% endif %}
-        <h3>{{ p.title }}</h3>
-        <span class="year">
-          {% if p.year %}{{ p.year }}{% endif %}
-          {% if p.location %} · {{ p.location }}{% endif %}
-        </span>
+        <div class="row">
+          <span class="title">{{ p.title }}</span>
+          <span class="year">{{ p.year }}</span>
+        </div>
       </a>
     {% endfor %}
   </div>
-</article>
+</section>

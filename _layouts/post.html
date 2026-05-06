@@ -1,16 +1,36 @@
 ---
 layout: default
 ---
+{%- comment -%}
+  Tone of the hero panel is driven by the post's category.
+  philosophy → ink   |  fiction → soft  |  essays → ink  |  updates → accent
+{%- endcomment -%}
+{%- assign cat = page.category | default: page.categories[0] | default: "essays" -%}
+{%- if cat == "philosophy" -%}{%- assign tone = "ink"    -%}{%- assign idx = "1.0" -%}
+{%- elsif cat == "fiction"  -%}{%- assign tone = "soft"   -%}{%- assign idx = "2.0" -%}
+{%- elsif cat == "essays"   -%}{%- assign tone = "ink"    -%}{%- assign idx = "3.0" -%}
+{%- elsif cat == "updates"  -%}{%- assign tone = "accent" -%}{%- assign idx = "4.0" -%}
+{%- else -%}{%- assign tone = "ink" -%}{%- assign idx = "—" -%}
+{%- endif -%}
+
+{% include hero.html
+   title=page.title
+   tone=tone
+   index=idx
+   sub=page.excerpt
+   section=cat
+   num=idx %}
+
 <article class="post prose">
   <p class="meta">
-    {%- assign cat = page.category | default: page.categories[0] -%}
-    {% if cat %}<a class="cat" href="{{ '/category/' | append: cat | append: '/' | relative_url }}">{{ cat }}</a>{% endif %}
+    <a class="cat" href="{{ '/category/' | append: cat | append: '/' | relative_url }}">{{ cat }}</a>
     <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%Y-%m-%d" }}</time>
   </p>
-  <h1>{{ page.title }}</h1>
   {{ content }}
   <hr>
   <p class="meta">
-    <a href="{{ '/' | relative_url }}">← Back to index</a>
+    <a href="{{ '/category/' | append: cat | append: '/' | relative_url }}">← More in {{ cat }}</a>
+    &nbsp;·&nbsp;
+    <a href="{{ '/' | relative_url }}">Back to index</a>
   </p>
 </article>

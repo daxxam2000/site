@@ -4,9 +4,14 @@ title: Philosophy
 permalink: /category/philosophy/
 category: philosophy
 ---
-<article class="prose">
-  <h1>Philosophy</h1>
-  <p class="meta">Posts in <em>philosophy</em>.</p>
+{% include hero.html
+   title="Philosophy"
+   tone="ink"
+   index="1.0 / Section"
+   sub="Notes on attention, language, mind, and the conditions of thought."
+   num="01" %}
+
+<article class="prose" style="max-width:none;">
   {% assign posts = site.categories.philosophy %}
   {% include post-list.html posts=posts %}
 </article>

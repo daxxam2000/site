@@ -4,9 +4,14 @@ title: Fiction
 permalink: /category/fiction/
 category: fiction
 ---
-<article class="prose">
-  <h1>Fiction</h1>
-  <p class="meta">Posts in <em>fiction</em>.</p>
+{% include hero.html
+   title="Fiction"
+   tone="soft"
+   index="2.0 / Section"
+   sub="Short stories, fragments, occasional novellas in disguise."
+   num="02" %}
+
+<article class="prose" style="max-width:none;">
   {% assign posts = site.categories.fiction %}
   {% include post-list.html posts=posts %}
 </article>

@@ -2,28 +2,50 @@
 layout: default
 title: Index
 ---
+{% include hero.html
+   title=site.title
+   tone="accent"
+   index="0.0 / Index"
+   sub=site.description
+   num="00" %}
+
 <section>
-  <p class="label">// Latest</p>
+  <div class="section-head">
+    <span class="num">§ Latest</span>
+    <span class="label">Most recent posts across all sections</span>
+  </div>
   {% include post-list.html posts=site.posts %}
 </section>
 
-<section>
-  <p class="label">// Sections</p>
+<section class="project-strip bleed">
+  <div class="section-head" style="border-top: 1px solid var(--rule-on-dark); color: rgba(237,237,237,0.65);">
+    <span class="num">§ Sections</span>
+    <span class="label" style="color: var(--paper);">All sections of the site</span>
+  </div>
   <div class="project-grid">
     {% for c in site.categories_list %}
-      {% assign count = site.categories[c] | size %}
+      {%- assign count = site.categories[c] | size -%}
       <a class="project-card" href="{{ '/category/' | append: c | append: '/' | relative_url }}">
-        <h3>{{ c | capitalize }}</h3>
-        <span class="year">{{ count }} post{% if count != 1 %}s{% endif %}</span>
+        <span class="cover" aria-hidden="true"></span>
+        <div class="row">
+          <span class="title">{{ c | capitalize }}</span>
+          <span class="year">{{ count }} post{% if count != 1 %}s{% endif %}</span>
+        </div>
       </a>
     {% endfor %}
     <a class="project-card" href="{{ '/photography/' | relative_url }}">
-      <h3>Photography</h3>
-      <span class="year">{{ site.photo_projects | size }} project{% if site.photo_projects.size != 1 %}s{% endif %}</span>
+      <span class="cover" aria-hidden="true"></span>
+      <div class="row">
+        <span class="title">Photography</span>
+        <span class="year">{{ site.photo_projects | size }} project{% if site.photo_projects.size != 1 %}s{% endif %}</span>
+      </div>
     </a>
     <a class="project-card" href="{{ '/ttrpg/' | relative_url }}">
-      <h3>TTRPG</h3>
-      <span class="year">{{ site.ttrpg | size }} game{% if site.ttrpg.size != 1 %}s{% endif %}</span>
+      <span class="cover" aria-hidden="true"></span>
+      <div class="row">
+        <span class="title">TTRPG</span>
+        <span class="year">{{ site.ttrpg | size }} game{% if site.ttrpg.size != 1 %}s{% endif %}</span>
+      </div>
     </a>
   </div>
 </section>

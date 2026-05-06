@@ -1,7 +1,8 @@
 /* ─────────────────────────────────────────────────────────────────
-   BRUTALIST PERSONAL SITE — main.css
-   No frameworks. No CSS-in-JS. No build step. Just CSS.
-   Edit freely.
+   PERSONAL SITE — main.css
+   Studio-Noteform-flavoured brutalism: huge geometric sans, hard
+   colour blocks (orange / ink / soft grey), corner-meta strips,
+   numbered sections.
    ───────────────────────────────────────────────────────────────── */
 
 /* ── reset ─────────────────────────────────────────────────────── */
@@ -12,15 +13,20 @@ button { font: inherit; cursor: pointer; }
 
 /* ── tokens ────────────────────────────────────────────────────── */
 :root {
-  --ink: #111;
-  --paper: #f4f1ea;          /* warm off-white, like newsprint */
-  --rule: #111;
-  --accent: #c8392b;         /* one accent: stop-sign red */
-  --muted: #555;
-  --grid: 1.4rem;            /* baseline rhythm */
-  --serif: "Iowan Old Style", "Georgia", "Charter", serif;
-  --mono:  "iA Writer Mono", "JetBrains Mono", "Menlo", "Consolas", monospace;
-  --sans:  -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Inter", sans-serif;
+  --ink: #0a0a0a;
+  --paper: #ededed;
+  --paper-soft: #d4d4d4;
+  --paper-deep: #1a1a1a;
+  --accent: #fe4a1f;          /* the punchy orange-red from the references */
+  --rule: rgba(10,10,10,0.18);
+  --rule-on-dark: rgba(237,237,237,0.22);
+  --muted: #6a6a6a;
+
+  --grid: 1.5rem;
+
+  --sans: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", system-ui, sans-serif;
+  --display: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", system-ui, sans-serif;
+  --mono:  "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 }
 
 /* ── document ──────────────────────────────────────────────────── */
@@ -28,288 +34,385 @@ html { font-size: 17px; -webkit-text-size-adjust: 100%; }
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--serif);
+  font-family: var(--sans);
+  font-feature-settings: "ss01", "cv11";  /* nicer Inter alternates */
   line-height: 1.5;
-  /* visible vertical baseline grid */
-  background-image: linear-gradient(
-    to bottom,
-    transparent calc(var(--grid) - 1px),
-    rgba(17,17,17,0.04) calc(var(--grid) - 1px),
-    rgba(17,17,17,0.04) var(--grid)
-  );
-  background-size: 100% var(--grid);
 }
 
-/* ── layout ────────────────────────────────────────────────────── */
+/* ── layout primitives ─────────────────────────────────────────── */
 .wrap {
-  max-width: 56rem;
+  max-width: 64rem;
   margin: 0 auto;
   padding: 0 1.4rem;
 }
+.bleed {
+  /* full-width-of-wrap panel that ignores the wrap padding */
+  margin-left: -1.4rem;
+  margin-right: -1.4rem;
+  padding-left: 1.4rem;
+  padding-right: 1.4rem;
+}
 
-/* ── masthead ──────────────────────────────────────────────────── */
-.masthead {
-  border-bottom: 2px solid var(--rule);
-  padding: 1.4rem 0 0.7rem;
-  margin-bottom: 1.4rem;
-}
-.masthead-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+/* ── corner meta strip ─────────────────────────────────────────── */
+.meta-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr) auto;
   gap: 1rem;
-  flex-wrap: wrap;
-}
-.masthead .site-title {
   font-family: var(--mono);
-  font-size: 1.6rem;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.9rem 0 0.7rem;
+  border-bottom: 1px solid currentColor;
+  opacity: 0.92;
+}
+.meta-strip > div { line-height: 1.35; }
+.meta-strip .field-label { display: block; opacity: 0.55; margin-bottom: 0.15rem; }
+.meta-strip .mark {
+  width: 0.85rem; height: 0.85rem; border: 1px solid currentColor; border-radius: 50%;
+  display: inline-block;
+}
+@media (max-width: 720px) {
+  .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 0.6rem 1rem; }
+  .meta-strip .mark { display: none; }
+}
+
+/* ── hero panel ────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1.2rem 1.4rem 2.2rem;
+  margin: 0 -1.4rem 2.6rem;
+}
+.hero--accent { background: var(--accent); color: var(--paper); }
+.hero--soft   { background: var(--paper-soft); color: var(--ink); }
+
+.hero__title {
+  font-family: var(--display);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+  font-size: clamp(3rem, 11vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  margin: 1.6rem 0 0;
+  max-width: 14ch;
 }
-.masthead .site-title a { color: inherit; text-decoration: none; }
-.masthead .site-meta {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+.hero__sub {
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  line-height: 1.4;
+  max-width: 38rem;
+  margin-top: 1rem;
+  opacity: 0.88;
 }
-.tagline {
+.hero__index {
+  position: absolute;
+  top: 0.95rem;
+  right: 1.4rem;
   font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-top: 0.4rem;
+  opacity: 0.85;
+  text-align: right;
+}
+.hero__num {
+  position: absolute;
+  right: 1.4rem;
+  bottom: 0.9rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(3rem, 9vw, 5.4rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
 }
 
 /* ── nav ───────────────────────────────────────────────────────── */
 .nav {
+  border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
-  padding: 0.5rem 0;
-  margin-bottom: 2.1rem;
+  padding: 0.55rem 0;
+  margin-bottom: 0;
   font-family: var(--mono);
-  font-size: 0.82rem;
+  font-size: 0.72rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
-.nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0 1.2rem; }
-.nav a { color: var(--ink); text-decoration: none; padding: 0.2rem 0; }
+.nav ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0 1.4rem; align-items: center; }
+.nav a {
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  gap: 0.35rem;
+  align-items: baseline;
+  padding: 0.2rem 0;
+}
+.nav a .num { font-size: 0.62rem; opacity: 0.6; }
 .nav a:hover, .nav a[aria-current="page"] {
-  background: var(--ink);
-  color: var(--paper);
-  padding: 0.2rem 0.4rem;
+  color: var(--accent);
 }
+.nav a[aria-current="page"] .num { opacity: 1; }
 
-/* ── headings ──────────────────────────────────────────────────── */
+/* ── headings (in body content) ────────────────────────────────── */
 h1, h2, h3, h4 {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }
-h1 { font-size: 2.4rem; margin: 1.4rem 0 0.7rem; }
-h2 { font-size: 1.6rem; margin: 1.4rem 0 0.7rem; }
-h3 { font-size: 1.2rem; margin: 1.4rem 0 0.4rem; }
+h1 { font-size: 2.6rem; margin: 1.4rem 0 0.7rem; }
+h2 { font-size: 1.7rem; margin: 1.6rem 0 0.6rem; }
+h3 { font-size: 1.2rem; margin: 1.2rem 0 0.4rem; }
 
 /* ── prose ─────────────────────────────────────────────────────── */
+.prose { max-width: 42rem; }
 .prose p,
 .prose ul,
 .prose ol,
 .prose blockquote,
-.prose figure { margin-bottom: var(--grid); }
+.prose figure { margin-bottom: var(--grid); font-size: 1.02rem; line-height: 1.6; }
 .prose ul, .prose ol { padding-left: 1.4rem; }
-.prose a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
-.prose a:hover { background: var(--accent); color: var(--paper); text-decoration: none; }
+.prose a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--accent);
+}
+.prose a:hover { color: var(--accent); }
 .prose blockquote {
-  border-left: 4px solid var(--ink);
+  border-left: 3px solid var(--accent);
   padding-left: 1rem;
-  font-style: italic;
+  font-style: normal;
   color: var(--muted);
 }
 .prose code {
   font-family: var(--mono);
   font-size: 0.92em;
-  background: rgba(17,17,17,0.07);
+  background: rgba(10,10,10,0.07);
   padding: 0.05em 0.3em;
+  border-radius: 2px;
 }
 .prose pre {
   font-family: var(--mono);
   background: var(--ink);
   color: var(--paper);
-  padding: 1rem;
+  padding: 1rem 1.2rem;
   overflow-x: auto;
-  border: 1px solid var(--ink);
   margin-bottom: var(--grid);
+  border-radius: 2px;
 }
 .prose hr {
   border: 0;
-  border-top: 1px solid var(--ink);
-  margin: 2.1rem 0;
+  border-top: 1px solid var(--rule);
+  margin: 2.4rem 0;
 }
 
 /* ── post / page meta ─────────────────────────────────────────── */
 .meta {
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   color: var(--muted);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   margin-bottom: 0.7rem;
 }
 .meta .cat {
   display: inline-block;
   background: var(--ink);
   color: var(--paper);
-  padding: 0.1rem 0.5rem;
+  padding: 0.15rem 0.5rem;
   margin-right: 0.4rem;
   text-decoration: none;
+  border-radius: 2px;
 }
 .meta .cat:hover { background: var(--accent); }
 
-/* ── post listing ─────────────────────────────────────────────── */
+/* ── section labels (numbered) ────────────────────────────────── */
+.section-head {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  gap: 1.4rem;
+  align-items: baseline;
+  border-top: 1px solid var(--rule);
+  padding-top: 0.8rem;
+  margin: 2.6rem 0 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.section-head .num { font-weight: 500; }
+.section-head .label { color: var(--ink); }
+
+/* ── post listing (tabular) ───────────────────────────────────── */
 .post-list {
   list-style: none;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--rule);
 }
 .post-list li {
-  border-bottom: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
   padding: 1rem 0;
   display: grid;
-  grid-template-columns: 7rem 1fr;
-  gap: 1rem;
+  grid-template-columns: 7.5rem 1fr 7rem;
+  gap: 1.2rem;
   align-items: baseline;
 }
 .post-list .date {
   font-family: var(--mono);
-  font-size: 0.82rem;
+  font-size: 0.74rem;
   color: var(--muted);
-  text-transform: uppercase;
   letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
-.post-list h3 { margin: 0; font-size: 1.15rem; line-height: 1.3; }
+.post-list h3 { margin: 0; font-size: 1.4rem; line-height: 1.15; letter-spacing: -0.01em; }
 .post-list h3 a { color: var(--ink); text-decoration: none; }
-.post-list h3 a:hover { background: var(--accent); color: var(--paper); }
-.post-list .excerpt { color: var(--muted); font-size: 0.95rem; margin-top: 0.3rem; }
+.post-list h3 a:hover { color: var(--accent); }
+.post-list .excerpt { color: var(--muted); font-size: 0.95rem; margin-top: 0.3rem; max-width: 36rem; }
 .post-list .post-cat {
   display: inline-block;
   font-family: var(--mono);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  border: 1px solid var(--ink);
-  padding: 0.05rem 0.4rem;
-  margin-left: 0.4rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .post-list li { grid-template-columns: 5rem 1fr; }
+  .post-list .post-cat { grid-column: 2; text-align: left; margin-top: 0.2rem; }
 }
 
 /* ── about page ───────────────────────────────────────────────── */
 .about-grid {
   display: grid;
-  grid-template-columns: 12rem 1fr;
-  gap: 1.4rem;
+  grid-template-columns: 14rem 1fr;
+  gap: 1.8rem;
   align-items: start;
+  margin-top: 1.4rem;
 }
 .about-grid .portrait {
-  border: 2px solid var(--ink);
-  filter: grayscale(1) contrast(1.05);
+  border: 0;
+  width: 100%;
+  background: var(--ink);
 }
-@media (max-width: 600px) {
+@media (max-width: 720px) {
   .about-grid { grid-template-columns: 1fr; }
-  .about-grid .portrait { max-width: 14rem; }
+  .about-grid .portrait { max-width: 16rem; }
 }
 
-/* ── photo project grid ───────────────────────────────────────── */
+/* ── photo project grid (Studio-Noteform "Projects" plate) ────── */
+.project-strip {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 1.6rem 1.4rem 2rem;
+  margin: 0 -1.4rem 2.4rem;
+}
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-  gap: 1.4rem;
-  margin: 1.4rem 0 2.8rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1.4rem 1.2rem;
 }
 .project-card {
-  border: 1px solid var(--ink);
-  padding: 0.7rem;
-  background: var(--paper);
   display: flex;
   flex-direction: column;
+  text-decoration: none;
+  color: inherit;
 }
-.project-card a { color: var(--ink); text-decoration: none; }
+.project-card,
+.project-card:visited,
+.project-card a,
+.project-card a:visited { color: inherit; text-decoration: none; }
 .project-card .cover {
   aspect-ratio: 4/3;
-  background: var(--ink);
-  filter: grayscale(1);
-  margin-bottom: 0.5rem;
-  object-fit: cover;
   width: 100%;
+  background: #222;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.05);
+  margin-bottom: 0.6rem;
 }
-.project-card h3 { font-size: 1.05rem; margin: 0; }
-.project-card .year {
+.project-card .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
   font-family: var(--mono);
   font-size: 0.74rem;
-  color: var(--muted);
-  text-transform: uppercase;
   letter-spacing: 0.06em;
-  margin-top: 0.3rem;
+  text-transform: uppercase;
 }
-.project-card:hover { background: var(--ink); color: var(--paper); }
-.project-card:hover h3, .project-card:hover .year { color: var(--paper); }
+.project-card .row .title { font-weight: 500; }
+.project-card .row .year { opacity: 0.65; }
+.project-card:hover .cover { filter: grayscale(0); }
+.project-card:hover .row .title { color: var(--accent); }
+
+/* same grid on a paper background (for the homepage section index) */
+.project-grid--paper .project-card .cover { background: var(--paper-soft); }
 
 /* ── photo project page ───────────────────────────────────────── */
-.photo-stack img { border: 1px solid var(--ink); margin-bottom: var(--grid); }
+.photo-stack figure { margin-bottom: var(--grid); }
+.photo-stack img { width: 100%; }
 
 /* ── ttrpg list ───────────────────────────────────────────────── */
-.ttrpg-list {
-  list-style: none;
-  border-top: 2px solid var(--ink);
-}
+.ttrpg-list { list-style: none; border-top: 1px solid var(--rule); }
 .ttrpg-list > li {
-  border-bottom: 2px solid var(--ink);
-  padding: 1.4rem 0;
+  border-bottom: 1px solid var(--rule);
+  padding: 1.6rem 0;
   display: grid;
-  grid-template-columns: 9rem 1fr;
-  gap: 1.4rem;
+  grid-template-columns: 10rem 1fr;
+  gap: 1.6rem;
 }
 .ttrpg-list .cover {
-  border: 1px solid var(--ink);
   aspect-ratio: 3/4;
+  width: 100%;
   background: var(--ink);
   filter: grayscale(1);
-  width: 100%;
   object-fit: cover;
 }
-.ttrpg-list h3 { font-size: 1.4rem; margin: 0 0 0.4rem; }
+.ttrpg-list h3 {
+  font-size: 2rem;
+  margin: 0 0 0.4rem;
+  letter-spacing: -0.02em;
+}
 .ttrpg-list .status {
   display: inline-block;
   font-family: var(--mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  border: 1px solid var(--ink);
-  padding: 0.05rem 0.4rem;
+  padding: 0.1rem 0.45rem;
   margin-left: 0.4rem;
+  vertical-align: middle;
+  border: 1px solid currentColor;
+  border-radius: 2px;
 }
-.ttrpg-list .status.released  { background: var(--ink); color: var(--paper); }
+.ttrpg-list .status.released    { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .ttrpg-list .status.in-progress { background: var(--accent); color: var(--paper); border-color: var(--accent); }
-.ttrpg-list .blurb { color: var(--ink); margin: 0.4rem 0 0.7rem; }
+.ttrpg-list .blurb { color: var(--ink); margin: 0.5rem 0 0.9rem; max-width: 38rem; }
 .ttrpg-list .links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
-@media (max-width: 600px) {
+@media (max-width: 720px) {
   .ttrpg-list > li { grid-template-columns: 1fr; }
   .ttrpg-list .cover { max-width: 12rem; }
+  .ttrpg-list h3 { font-size: 1.5rem; }
 }
 
 /* ── buttons / chips ──────────────────────────────────────────── */
 .btn {
   display: inline-block;
   font-family: var(--mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  border: 2px solid var(--ink);
-  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--ink);
+  padding: 0.5rem 0.85rem;
   text-decoration: none;
   color: var(--ink);
-  background: var(--paper);
+  background: transparent;
+  border-radius: 2px;
 }
 .btn:hover { background: var(--ink); color: var(--paper); }
 .btn.accent { background: var(--accent); color: var(--paper); border-color: var(--accent); }
@@ -317,125 +420,89 @@ h3 { font-size: 1.2rem; margin: 1.4rem 0 0.4rem; }
 
 /* ── footer ───────────────────────────────────────────────────── */
 .foot {
-  border-top: 2px solid var(--ink);
-  margin-top: 2.8rem;
-  padding: 1.4rem 0 2.8rem;
+  border-top: 1px solid var(--rule);
+  margin-top: 3rem;
+  padding: 1.4rem 0 2.4rem;
   font-family: var(--mono);
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   color: var(--muted);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.7rem;
 }
 
-/* ── section labels (file-system style) ───────────────────────── */
-.label {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  border-bottom: 1px solid var(--ink);
-  padding-bottom: 0.2rem;
-  margin: 2.1rem 0 0.7rem;
-  display: block;
-}
-
 /* ── selection ────────────────────────────────────────────────── */
 ::selection { background: var(--accent); color: var(--paper); }
 
 /* ─────────────────────────────────────────────────────────────────
-   FOOTNOTES (littlefoot.js v4)
-   These rules override littlefoot.css to match the brutalist theme.
-   When littlefoot mounts, it hides the default footnote list at the
-   bottom of the post and replaces inline references with a numbered
-   button that expands a popover on click.
+   FOOTNOTES (littlefoot.js v4) — overrides for the new palette.
    ───────────────────────────────────────────────────────────────── */
 
-/* The little number-in-a-box that replaces the [^1] marker. */
 .littlefoot__button {
-  /* reset littlefoot's pill */
-  background: var(--paper) !important;
-  border: 1.5px solid var(--ink) !important;
-  border-radius: 0 !important;
+  background: var(--ink) !important;
+  border: 0 !important;
+  border-radius: 2px !important;
   box-shadow: none !important;
-  color: var(--ink) !important;
+  color: var(--paper) !important;
   font-family: var(--mono) !important;
-  font-size: 0.7rem !important;
-  font-weight: 700 !important;
+  font-size: 0.66rem !important;
+  font-weight: 500 !important;
   letter-spacing: 0;
   line-height: 1 !important;
   height: auto !important;
   width: auto !important;
-  min-width: 1.4rem;
+  min-width: 1.3rem;
   margin: 0 0.15rem 0 0.05rem;
-  padding: 0.15rem 0.35rem !important;
+  padding: 0.18rem 0.35rem !important;
   vertical-align: super;
-  transform: translateY(-0.05rem);
+  transform: translateY(-0.1rem);
   transition: none !important;
 }
 .littlefoot__button:hover,
 .littlefoot__button.is-active {
-  background: var(--ink) !important;
+  background: var(--accent) !important;
   color: var(--paper) !important;
 }
-/* the dot pattern that littlefoot draws after the number — kill it */
 .littlefoot__button .littlefoot__circle { display: none !important; }
 
-/* The popover that opens above/below the button. */
 .littlefoot__popover {
-  background: var(--paper) !important;
-  border: 2px solid var(--ink) !important;
-  border-radius: 0 !important;
-  box-shadow: 4px 4px 0 var(--ink) !important;
-  color: var(--ink) !important;
-  font-family: var(--serif) !important;
+  background: var(--ink) !important;
+  border: 0 !important;
+  border-radius: 2px !important;
+  box-shadow: 6px 6px 0 var(--accent) !important;
+  color: var(--paper) !important;
+  font-family: var(--sans) !important;
   font-size: 0.95rem !important;
-  max-width: 26rem !important;
+  max-width: 28rem !important;
   padding: 0 !important;
 }
-.littlefoot__popover::before,
-.littlefoot__popover::after { display: none !important; } /* no tail/arrow */
-
-.littlefoot__wrapper {
-  background: transparent !important;
-  border-radius: 0 !important;
-  padding: 0 !important;
-}
+.littlefoot__popover::after { display: none !important; }
+.littlefoot__wrapper { background: transparent !important; border-radius: 0 !important; padding: 0 !important; }
 .littlefoot__content {
-  padding: 0.8rem 1rem !important;
+  padding: 0.85rem 1rem !important;
   background: transparent !important;
   border-radius: 0 !important;
-  font-family: var(--serif) !important;
+  font-family: var(--sans) !important;
+  color: var(--paper) !important;
 }
 .littlefoot__content p { margin: 0 0 0.5rem; }
 .littlefoot__content p:last-child { margin-bottom: 0; }
-.littlefoot__content a {
-  color: var(--ink);
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-}
-.littlefoot__content a:hover { background: var(--accent); color: var(--paper); text-decoration: none; }
+.littlefoot__content a { color: var(--accent); text-decoration: underline; }
+.littlefoot__content a:hover { color: var(--paper); }
 
-/* Header strip on top of the popover — adds a small mono label. */
 .littlefoot__popover::before {
   display: block !important;
   content: "FOOTNOTE";
   font-family: var(--mono) !important;
-  font-size: 0.66rem !important;
-  letter-spacing: 0.1em;
+  font-size: 0.62rem !important;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: var(--ink) !important;
+  background: var(--accent) !important;
   color: var(--paper) !important;
-  padding: 0.25rem 0.5rem !important;
-  border-radius: 0 !important;
+  padding: 0.3rem 0.6rem !important;
 }
 
-/* Hide the original footnote list when JS is enabled (littlefoot replaces it
-   with a popover). The `.js` class is set in the head, so this never flashes. */
 html.js .footnotes { display: none; }
-

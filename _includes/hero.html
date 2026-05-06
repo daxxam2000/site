@@ -1,0 +1,43 @@
+{%- comment -%}
+  Coloured hero panel with an internal mono "meta strip" up top.
+  Pass these params:
+    title        — the giant display headline (required)
+    tone         — "ink" (black) | "accent" (orange) | "soft" (grey). Default ink.
+    index        — small mono index e.g. "1.0" (top right)
+    num          — giant numeral (bottom right)
+    sub          — optional subtitle paragraph
+    section      — text for the SECTION field in the meta strip (defaults to title)
+    fao          — text for the FAO field (default "Reader")
+{%- endcomment -%}
+{%- assign tone = include.tone | default: "ink" -%}
+{%- assign section = include.section | default: include.title -%}
+{%- assign fao = include.fao | default: "Reader" -%}
+<header class="hero hero--{{ tone }} bleed">
+  <div class="meta-strip">
+    <div>
+      <span class="field-label">{{ site.title | escape }}</span>
+      Personal site<br>© {{ site.time | date: "%Y" }}
+    </div>
+    <div>
+      <span class="field-label">FAO</span>
+      {{ fao }}
+    </div>
+    <div>
+      <span class="field-label">Section</span>
+      {{ section }}
+    </div>
+    <div>
+      <span class="field-label">Updated</span>
+      {{ site.time | date: "%Y.%m.%d" }}
+    </div>
+    <span class="mark" aria-hidden="true"></span>
+  </div>
+
+  {% if include.index %}<div class="hero__index">{{ include.index }}</div>{% endif %}
+
+  <h1 class="hero__title">{{ include.title }}</h1>
+
+  {% if include.sub %}<p class="hero__sub">{{ include.sub }}</p>{% endif %}
+
+  {% if include.num %}<div class="hero__num">{{ include.num }}</div>{% endif %}
+</header>

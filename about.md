@@ -2,6 +2,10 @@
 layout: page
 title: About
 permalink: /about/
+tone: soft
+index: "7.0 / Section"
+num: "07"
+subtitle: "Writer, photographer, designer of small games. This is the index."
 ---
 
 <div class="about-grid">
@@ -17,7 +21,7 @@ permalink: /about/
 
 ## Colophon
 
-Set in a serif body face with a monospaced UI. Built with Jekyll, hosted on GitHub Pages, written in iA Writer. The visual grain is deliberate — a small protest against the smoothness of contemporary publishing platforms.
+Set in Inter for body and display, JetBrains Mono for UI labels. Built with Jekyll, deployed via GitHub Actions, written in iA Writer. The visual grain is deliberate — a small protest against the smoothness of contemporary publishing platforms.
 
 ## Elsewhere
 

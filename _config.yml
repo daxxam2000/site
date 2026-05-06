@@ -73,17 +73,21 @@ categories_list:
   - updates
 
 # ──────────────────────────────────────────────────────────────────
-# NAV (top-level links)
+# NAV (top-level links). `tone` drives the hero panel colour:
+#   ink    → black panel, paper text
+#   accent → orange panel, paper text
+#   soft   → mid-grey panel, ink text
+# `index` is the small mono ordinal (e.g. 1.0, 2.0) shown in the corner.
 # ──────────────────────────────────────────────────────────────────
 nav:
-  - { title: "Index",       url: "/" }
-  - { title: "Philosophy",  url: "/category/philosophy/" }
-  - { title: "Fiction",     url: "/category/fiction/" }
-  - { title: "Essays",      url: "/category/essays/" }
-  - { title: "Updates",     url: "/category/updates/" }
-  - { title: "Photography", url: "/photography/" }
-  - { title: "TTRPG",       url: "/ttrpg/" }
-  - { title: "About",       url: "/about/" }
+  - { title: "Index",       url: "/",                     index: "0.0", tone: "accent" }
+  - { title: "Philosophy",  url: "/category/philosophy/", index: "1.0", tone: "ink"    }
+  - { title: "Fiction",     url: "/category/fiction/",    index: "2.0", tone: "soft"   }
+  - { title: "Essays",      url: "/category/essays/",     index: "3.0", tone: "ink"    }
+  - { title: "Updates",     url: "/category/updates/",    index: "4.0", tone: "accent" }
+  - { title: "Photography", url: "/photography/",         index: "5.0", tone: "ink"    }
+  - { title: "TTRPG",       url: "/ttrpg/",               index: "6.0", tone: "accent" }
+  - { title: "About",       url: "/about/",               index: "7.0", tone: "soft"   }
 
 # ──────────────────────────────────────────────────────────────────
 # EXCLUDE

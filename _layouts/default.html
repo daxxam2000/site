@@ -8,6 +8,10 @@
   <script>document.documentElement.classList.add('js');</script>
   <title>{% if page.title %}{{ page.title | escape }} — {{ site.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
   <meta name="description" content="{{ page.description | default: site.description | strip_html | normalize_whitespace | truncate: 160 }}">
+  <!-- Type: Inter for sans/display, JetBrains Mono for UI / labels -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   <!-- littlefoot — turns kramdown footnotes into popovers -->
   <link rel="stylesheet" href="https://unpkg.com/littlefoot@4/dist/littlefoot.css">
@@ -15,18 +19,20 @@
   {%- seo -%}
 </head>
 <body>
-  {% include header.html %}
+  <div class="wrap">
+    {% include header.html %}
+  </div>
   <main class="wrap" role="main">
     {{ content }}
   </main>
-  {% include footer.html %}
+  <div class="wrap">
+    {% include footer.html %}
+  </div>
   <!-- littlefoot init — runs after DOM + script are ready -->
   <script src="https://unpkg.com/littlefoot@4/dist/littlefoot.js" defer></script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       if (typeof littlefoot === 'undefined') return;
-      // littlefoot v4 exposes either `littlefoot()` (function) or
-      // `littlefoot.littlefoot()` (namespaced) depending on the bundle.
       var lf = (typeof littlefoot === 'function') ? littlefoot : littlefoot.littlefoot;
       if (typeof lf === 'function') {
         lf({

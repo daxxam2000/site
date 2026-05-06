@@ -4,9 +4,14 @@ title: Updates
 permalink: /category/updates/
 category: updates
 ---
-<article class="prose">
-  <h1>Updates</h1>
-  <p class="meta">Posts in <em>updates</em>.</p>
+{% include hero.html
+   title="Updates"
+   tone="accent"
+   index="4.0 / Section"
+   sub="What I'm reading, making, listening to. Brief. Frequent."
+   num="04" %}
+
+<article class="prose" style="max-width:none;">
   {% assign posts = site.categories.updates %}
   {% include post-list.html posts=posts %}
 </article>

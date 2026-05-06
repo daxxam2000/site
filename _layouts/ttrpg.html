@@ -1,19 +1,24 @@
 ---
 layout: default
 ---
+{% include hero.html
+   title=page.title
+   tone="accent"
+   index="6.0"
+   section="TTRPG"
+   sub=page.tagline
+   num=page.year %}
+
 <article class="ttrpg-game prose">
   <p class="meta">
     <a class="cat" href="{{ '/ttrpg/' | relative_url }}">TTRPG</a>
-    {% if page.status %}<span>{{ page.status }}</span>{% endif %}
+    {% if page.status %}<span>· {{ page.status }}</span>{% endif %}
     {% if page.players %}<span>· {{ page.players }} players</span>{% endif %}
   </p>
-  <h1>{{ page.title }}</h1>
-  {% if page.tagline %}<p><em>{{ page.tagline }}</em></p>{% endif %}
 
   {{ content }}
 
   {% if page.links and page.links.size > 0 %}
-  <p class="label">Where to find it</p>
   <p>
     {% for l in page.links %}
       <a class="btn{% if l.featured %} accent{% endif %}" href="{{ l.url }}" rel="noopener">{{ l.label }}</a>
