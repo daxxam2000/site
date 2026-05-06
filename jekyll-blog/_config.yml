@@ -1,16 +1,16 @@
 # ──────────────────────────────────────────────────────────────────
 # SITE
 # ──────────────────────────────────────────────────────────────────
-title: "Your Name"
+title: "Maxfield Weir"
 tagline: "philosophy / fiction / essays / updates"
 description: >-
   A personal site for writing, photography, and tabletop role-playing games.
-author: "Your Name"
-email: "you@example.com"
+author: "Maxfield Weir"
+email: "maxfieldjweir@me.com"
 
 # Set this to your GitHub Pages URL once you know it.
-# For user/organisation sites: https://<user>.github.io
-# For project sites:           https://<user>.github.io/<repo>
+# For user/organisation sites: https://daxxam2000.github.io
+# For project sites:           https://daxxam2000.github.io/site
 url: ""
 baseurl: ""
 
@@ -34,6 +34,68 @@ paginate_path: "/page/:num/"
 
 # ──────────────────────────────────────────────────────────────────
 # COLLECTIONS
+# ──────────────────────────────────────────────────────────────────
+collections:
+  photo_projects:
+    output: true
+    permalink: /photography/:path/
+  ttrpg:
+    output: true
+    permalink: /ttrpg/:path/
+
+# ──────────────────────────────────────────────────────────────────
+# DEFAULTS
+# ──────────────────────────────────────────────────────────────────
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: ""
+      type: photo_projects
+    values:
+      layout: photo-project
+  - scope:
+      path: ""
+      type: ttrpg
+    values:
+      layout: ttrpg
+
+# ──────────────────────────────────────────────────────────────────
+# CATEGORIES (used by the navigation + archive pages)
+# ──────────────────────────────────────────────────────────────────
+categories_list:
+  - philosophy
+  - fiction
+  - essays
+  - updates
+
+# ──────────────────────────────────────────────────────────────────
+# NAV (top-level links)
+# ──────────────────────────────────────────────────────────────────
+nav:
+  - { title: "Index",       url: "/" }
+  - { title: "Philosophy",  url: "/category/philosophy/" }
+  - { title: "Fiction",     url: "/category/fiction/" }
+  - { title: "Essays",      url: "/category/essays/" }
+  - { title: "Updates",     url: "/category/updates/" }
+  - { title: "Photography", url: "/photography/" }
+  - { title: "TTRPG",       url: "/ttrpg/" }
+  - { title: "About",       url: "/about/" }
+
+# ──────────────────────────────────────────────────────────────────
+# EXCLUDE
+# ──────────────────────────────────────────────────────────────────
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - README.md
+  - .sass-cache
+  - .jekyll-cache
 # ──────────────────────────────────────────────────────────────────
 collections:
   photo_projects:
