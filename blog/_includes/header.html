@@ -1,0 +1,19 @@
+<header class="masthead wrap">
+  <div class="masthead-row">
+    <div class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></div>
+    <div class="site-meta">
+      ISSUE — {{ site.time | date: "%Y.%m" }}
+    </div>
+  </div>
+  <p class="tagline">{{ site.tagline }}</p>
+</header>
+<nav class="nav wrap" aria-label="Primary">
+  <ul>
+    {% for item in site.nav %}
+      <li>
+        <a href="{{ item.url | relative_url }}"
+           {% if page.url == item.url %}aria-current="page"{% endif %}>{{ item.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>
