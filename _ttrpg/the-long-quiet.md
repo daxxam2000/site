@@ -1,4 +1,5 @@
 ---
+layout: ttrpg
 title: "The Long Quiet"
 order: 2
 year: 2026

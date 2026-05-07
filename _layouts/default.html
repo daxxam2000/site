@@ -46,23 +46,33 @@
         }
       }
 
-      // 1. Multi-dropdown coordination via the <details> toggle event.
-      //    Critical: we DON'T intercept the summary click. Safari (WebKit)
-      //    has a long-standing bug where preventDefault() on a summary click
-      //    doesn't reliably stop the native toggle, so manual toggling and
-      //    native toggling fight each other. Listening for `toggle` instead
-      //    lets the browser handle open/close natively, and we just enforce
-      //    "only one open at a time" reactively.
+      // The share dropdown is a plain button + div (no <details>). The button
+      // carries aria-expanded; the menu has a `hidden` attribute. JS owns
+      // the entire toggle state, so there are zero browser quirks to fight.
+
+      function setShareOpen(share, open) {
+        var btn = share.querySelector('.share__toggle');
+        var menu = share.querySelector('.share__menu');
+        if (!btn || !menu) return;
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (open) menu.removeAttribute('hidden');
+        else menu.setAttribute('hidden', '');
+      }
+
       function bindShareToggles() {
-        document.querySelectorAll('details.share').forEach(function (d) {
-          if (d.dataset.shareBound) return;
-          d.dataset.shareBound = '1';
-          d.addEventListener('toggle', function () {
-            if (d.open) {
-              document.querySelectorAll('details.share[open]').forEach(function (o) {
-                if (o !== d) o.open = false;
-              });
-            }
+        document.querySelectorAll('.share .share__toggle').forEach(function (btn) {
+          if (btn.dataset.shareBound) return;
+          btn.dataset.shareBound = '1';
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var share = btn.closest('.share');
+            var willOpen = btn.getAttribute('aria-expanded') !== 'true';
+            // Close other share dropdowns first.
+            document.querySelectorAll('.share').forEach(function (s) {
+              if (s !== share) setShareOpen(s, false);
+            });
+            setShareOpen(share, willOpen);
           });
         });
       }
@@ -72,13 +82,13 @@
         bindShareToggles();
       }
 
-      // 2. Menu item clicks + outside-close (document delegation is fine here).
+      // Menu item clicks + outside-close.
       document.addEventListener('click', function (e) {
         var trigger = e.target.closest('[data-share]');
         if (trigger) {
-          var details = trigger.closest('details.share');
-          var url = (details && details.dataset.shareUrl) || window.location.href;
-          var text = (details && details.dataset.shareText) || document.title;
+          var share = trigger.closest('.share');
+          var url = (share && share.dataset.shareUrl) || window.location.href;
+          var text = (share && share.dataset.shareText) || document.title;
           var action = trigger.dataset.share;
 
           if (action === 'copy') {
@@ -101,16 +111,21 @@
           if (u) {
             e.preventDefault();
             window.open(u, action === 'email' ? '_self' : '_blank', 'noopener');
-            if (details) details.open = false;
+            if (share) setShareOpen(share, false);
           }
           return;
         }
 
-        // Click outside any share details closes all open ones.
-        if (!e.target.closest('details.share')) {
-          document.querySelectorAll('details.share[open]').forEach(function (d) {
-            d.open = false;
-          });
+        // Click outside any .share closes all open dropdowns.
+        if (!e.target.closest('.share')) {
+          document.querySelectorAll('.share').forEach(function (s) { setShareOpen(s, false); });
+        }
+      });
+
+      // Esc closes any open dropdown.
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.share').forEach(function (s) { setShareOpen(s, false); });
         }
       });
     })();

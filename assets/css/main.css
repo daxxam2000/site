@@ -72,7 +72,7 @@ body {
   position: relative;     /* anchor for the share dropdown */
 }
 .meta-strip > div,
-.meta-strip > details { flex: 1 1 8rem; min-width: 8rem; line-height: 1.35; }
+.meta-strip > .share { flex: 1 1 8rem; min-width: 8rem; line-height: 1.35; }
 .meta-strip .field-label { display: block; opacity: 0.55; margin-bottom: 0.15rem; }
 .meta-strip .mark {
   width: 0.85rem; height: 0.85rem; border: 1px solid currentColor; border-radius: 50%;
@@ -83,7 +83,7 @@ body {
 @media (max-width: 720px) {
   .meta-strip { gap: 0.6rem 1.4rem; }
   .meta-strip > div,
-  .meta-strip > details { flex-basis: 40%; }
+  .meta-strip > .share { flex-basis: 40%; }
   .meta-strip .mark { display: none; }
 }
 
@@ -470,29 +470,41 @@ h3 { font-size: 1.2rem; margin: 1.2rem 0 0.4rem; }
 
 /* ─────────────────────────────────────────────────────────────────
    SHARE DROPDOWN (in the meta strip)
-   <details class="share">
-     <summary>Share / Link ↗</summary>
-     <div class="share__menu">…options…</div>
-   </details>
+   <div class="share">
+     <button class="share__toggle" aria-expanded="false">Share / Link ↗</button>
+     <div class="share__menu" hidden>…options…</div>
+   </div>
+   Plain button + div instead of <details>/<summary> — Safari has nasty
+   quirks with native <details> toggles (preventDefault is unreliable),
+   and rolling our own with aria-expanded is more predictable.
    ───────────────────────────────────────────────────────────────── */
 
 .share { position: relative; }
-.share summary {
+
+.share__toggle {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  text-align: left;
+  padding: 0;
+  margin: 0;
+  width: 100%;
   cursor: pointer;
-  list-style: none;          /* hide default triangle */
-  display: block;
+  line-height: inherit;
 }
-.share summary::-webkit-details-marker { display: none; }
-.share summary::marker { content: ""; }
-.share .share__arrow {
+.share__toggle:focus-visible { outline: 1px dashed currentColor; outline-offset: 3px; }
+
+.share__arrow {
   display: inline-block;
   margin-left: 0.15rem;
   transition: transform 0.15s ease;
 }
-.share[open] .share__arrow { transform: rotate(45deg); }
+.share__toggle[aria-expanded="true"] .share__arrow { transform: rotate(45deg); }
 
-.share .share__menu {
-  display: none;
+.share__menu {
   position: absolute;
   top: calc(100% + 0.6rem);
   left: 0;
@@ -506,8 +518,8 @@ h3 { font-size: 1.2rem; margin: 1.2rem 0 0.4rem; }
   border-radius: 2px;
 }
 /* On the orange (accent) hero, the orange shadow disappears. Use ink instead. */
-.hero--accent .share .share__menu { box-shadow: 6px 6px 0 var(--ink); }
-.share[open] .share__menu { display: block; }
+.hero--accent .share__menu { box-shadow: 6px 6px 0 var(--ink); }
+.share__menu[hidden] { display: none !important; }
 
 .share__opt {
   display: grid;
@@ -543,7 +555,7 @@ h3 { font-size: 1.2rem; margin: 1.2rem 0 0.4rem; }
 /* On mobile, anchor the dropdown to the meta-strip's left edge so it doesn't
    overflow when the share field is in the second column of a 2-up layout. */
 @media (max-width: 720px) {
-  .share .share__menu { left: 0; right: auto; }
+  .share__menu { left: 0; right: auto; }
 }
 
 /* ─────────────────────────────────────────────────────────────────

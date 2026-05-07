@@ -1,4 +1,5 @@
 ---
+layout: photo-project
 title: "Concrete Light"
 year: 2025
 location: "London, UK"

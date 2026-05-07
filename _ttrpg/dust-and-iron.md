@@ -1,4 +1,5 @@
 ---
+layout: ttrpg
 title: "Dust & Iron"
 order: 1
 year: 2025

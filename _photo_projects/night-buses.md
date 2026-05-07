@@ -1,4 +1,5 @@
 ---
+layout: photo-project
 title: "Night Buses"
 year: 2024
 location: "Various"
