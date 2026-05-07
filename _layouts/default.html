@@ -46,23 +46,34 @@
         }
       }
 
-      document.addEventListener('click', function (e) {
-        // 1. Summary click — manually toggle so we don't race with native behaviour.
-        var maybeSummary = e.target.closest('summary');
-        var maybeShare = maybeSummary && maybeSummary.closest('details.share');
-        if (maybeSummary && maybeShare) {
-          e.preventDefault();
-          var willOpen = !maybeShare.hasAttribute('open');
-          // Close other share dropdowns first.
-          document.querySelectorAll('details.share[open]').forEach(function (d) {
-            if (d !== maybeShare) d.removeAttribute('open');
+      // 1. Bind toggle directly to each summary. Direct binding (not document
+      //    delegation) avoids Safari's native <details> toggle racing with our
+      //    handler — preventDefault here reliably stops the browser default.
+      function bindShareSummaries() {
+        document.querySelectorAll('details.share').forEach(function (d) {
+          var s = d.querySelector('summary');
+          if (!s || s.dataset.shareBound) return;
+          s.dataset.shareBound = '1';
+          s.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            d.open = !d.open;
+            if (d.open) {
+              document.querySelectorAll('details.share[open]').forEach(function (o) {
+                if (o !== d) o.open = false;
+              });
+            }
           });
-          if (willOpen) maybeShare.setAttribute('open', '');
-          else maybeShare.removeAttribute('open');
-          return;
-        }
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bindShareSummaries);
+      } else {
+        bindShareSummaries();
+      }
 
-        // 2. A menu item click.
+      // 2. Menu item clicks + outside-close (document delegation is fine here).
+      document.addEventListener('click', function (e) {
         var trigger = e.target.closest('[data-share]');
         if (trigger) {
           var details = trigger.closest('details.share');
@@ -83,7 +94,6 @@
           if (action === 'bluesky') {
             u = 'https://bsky.app/intent/compose?text=' + encodeURIComponent(text + ' ' + url);
           } else if (action === 'mastodon') {
-            // Generic share endpoint that asks the user for their instance.
             u = 'https://toot.kytta.dev/?text=' + encodeURIComponent(text + ' ' + url);
           } else if (action === 'email') {
             u = 'mailto:?subject=' + encodeURIComponent(text) + '&body=' + encodeURIComponent(url);
@@ -91,16 +101,17 @@
           if (u) {
             e.preventDefault();
             window.open(u, action === 'email' ? '_self' : '_blank', 'noopener');
-            // Close the dropdown after launching.
-            if (details) details.removeAttribute('open');
+            if (details) details.open = false;
           }
           return;
         }
 
-        // 3. Click outside any open share dropdown closes it.
-        document.querySelectorAll('details.share[open]').forEach(function (d) {
-          if (!d.contains(e.target)) d.removeAttribute('open');
-        });
+        // Click outside any share details closes all open ones.
+        if (!e.target.closest('details.share')) {
+          document.querySelectorAll('details.share[open]').forEach(function (d) {
+            d.open = false;
+          });
+        }
       });
     })();
   </script>

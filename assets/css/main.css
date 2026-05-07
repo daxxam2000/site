@@ -505,6 +505,8 @@ h3 { font-size: 1.2rem; margin: 1.2rem 0 0.4rem; }
   font-family: var(--mono);
   border-radius: 2px;
 }
+/* On the orange (accent) hero, the orange shadow disappears. Use ink instead. */
+.hero--accent .share .share__menu { box-shadow: 6px 6px 0 var(--ink); }
 .share[open] .share__menu { display: block; }
 
 .share__opt {
