@@ -229,6 +229,15 @@ h3 { font-size: 1.2rem; margin: 1.2rem 0 0.4rem; }
   border-radius: 2px;
 }
 .meta .cat:hover { background: var(--accent); }
+.meta .read-time,
+.read-time {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
 
 /* ── section labels (numbered) ────────────────────────────────── */
 .section-head {

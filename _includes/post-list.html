@@ -9,6 +9,9 @@
 <ul class="post-list">
   {% for post in list %}
     {%- assign cat = post.category | default: post.categories[0] -%}
+    {%- assign words = post.content | number_of_words -%}
+    {%- assign mins = words | divided_by: 200 -%}
+    {%- if mins < 1 -%}{%- assign mins = 1 -%}{%- endif -%}
     <li>
       <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
       <div class="body">
@@ -16,6 +19,7 @@
         {% if post.excerpt %}
           <p class="excerpt">{{ post.excerpt | strip_html | truncate: 200 }}</p>
         {% endif %}
+        <span class="read-time">{{ mins }} min read</span>
       </div>
       <span class="post-cat">{% if cat %}{{ cat }}{% endif %}</span>
     </li>
