@@ -47,6 +47,22 @@
       }
 
       document.addEventListener('click', function (e) {
+        // 1. Summary click — manually toggle so we don't race with native behaviour.
+        var maybeSummary = e.target.closest('summary');
+        var maybeShare = maybeSummary && maybeSummary.closest('details.share');
+        if (maybeSummary && maybeShare) {
+          e.preventDefault();
+          var willOpen = !maybeShare.hasAttribute('open');
+          // Close other share dropdowns first.
+          document.querySelectorAll('details.share[open]').forEach(function (d) {
+            if (d !== maybeShare) d.removeAttribute('open');
+          });
+          if (willOpen) maybeShare.setAttribute('open', '');
+          else maybeShare.removeAttribute('open');
+          return;
+        }
+
+        // 2. A menu item click.
         var trigger = e.target.closest('[data-share]');
         if (trigger) {
           var details = trigger.closest('details.share');
@@ -75,11 +91,13 @@
           if (u) {
             e.preventDefault();
             window.open(u, action === 'email' ? '_self' : '_blank', 'noopener');
+            // Close the dropdown after launching.
+            if (details) details.removeAttribute('open');
           }
           return;
         }
 
-        // Click outside any open share dropdown closes it.
+        // 3. Click outside any open share dropdown closes it.
         document.querySelectorAll('details.share[open]').forEach(function (d) {
           if (!d.contains(e.target)) d.removeAttribute('open');
         });
