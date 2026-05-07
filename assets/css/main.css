@@ -54,10 +54,13 @@ body {
 }
 
 /* ── corner meta strip ─────────────────────────────────────────── */
+/* Flex layout so missing fields (e.g. SECTION on the index page) collapse
+   gracefully instead of leaving an empty grid cell. */
 .meta-strip {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr) auto;
-  gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 2rem;
+  align-items: flex-start;
   font-family: var(--mono);
   font-size: 0.66rem;
   font-weight: 500;
@@ -66,15 +69,21 @@ body {
   padding: 0.9rem 0 0.7rem;
   border-bottom: 1px solid currentColor;
   opacity: 0.92;
+  position: relative;     /* anchor for the share dropdown */
 }
-.meta-strip > div { line-height: 1.35; }
+.meta-strip > div,
+.meta-strip > details { flex: 1 1 8rem; min-width: 8rem; line-height: 1.35; }
 .meta-strip .field-label { display: block; opacity: 0.55; margin-bottom: 0.15rem; }
 .meta-strip .mark {
   width: 0.85rem; height: 0.85rem; border: 1px solid currentColor; border-radius: 50%;
-  display: inline-block;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  margin-left: auto;
 }
 @media (max-width: 720px) {
-  .meta-strip { grid-template-columns: repeat(2, 1fr); gap: 0.6rem 1rem; }
+  .meta-strip { gap: 0.6rem 1.4rem; }
+  .meta-strip > div,
+  .meta-strip > details { flex-basis: 40%; }
   .meta-strip .mark { display: none; }
 }
 
@@ -458,6 +467,82 @@ h3 { font-size: 1.2rem; margin: 1.2rem 0 0.4rem; }
 
 /* ── selection ────────────────────────────────────────────────── */
 ::selection { background: var(--accent); color: var(--paper); }
+
+/* ─────────────────────────────────────────────────────────────────
+   SHARE DROPDOWN (in the meta strip)
+   <details class="share">
+     <summary>Share / Link ↗</summary>
+     <div class="share__menu">…options…</div>
+   </details>
+   ───────────────────────────────────────────────────────────────── */
+
+.share { position: relative; }
+.share summary {
+  cursor: pointer;
+  list-style: none;          /* hide default triangle */
+  display: block;
+}
+.share summary::-webkit-details-marker { display: none; }
+.share summary::marker { content: ""; }
+.share .share__arrow {
+  display: inline-block;
+  margin-left: 0.15rem;
+  transition: transform 0.15s ease;
+}
+.share[open] .share__arrow { transform: rotate(45deg); }
+
+.share .share__menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  left: 0;
+  z-index: 50;
+  min-width: 14rem;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.4rem 0;
+  box-shadow: 6px 6px 0 var(--accent);
+  font-family: var(--mono);
+  border-radius: 2px;
+}
+.share[open] .share__menu { display: block; }
+
+.share__opt {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.9rem;
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+}
+.share__opt:hover,
+.share__opt:focus {
+  background: var(--accent);
+  color: var(--paper);
+  outline: none;
+}
+.share__opt-num { opacity: 0.5; }
+.share__opt.is-copied .share__opt-label::after {
+  content: " ✓ Copied";
+  opacity: 0.8;
+  margin-left: 0.4rem;
+}
+
+/* On mobile, anchor the dropdown to the meta-strip's left edge so it doesn't
+   overflow when the share field is in the second column of a 2-up layout. */
+@media (max-width: 720px) {
+  .share .share__menu { left: 0; right: auto; }
+}
 
 /* ─────────────────────────────────────────────────────────────────
    FOOTNOTES (littlefoot.js v4) — overrides for the new palette.

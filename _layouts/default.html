@@ -28,6 +28,64 @@
   <div class="wrap">
     {% include footer.html %}
   </div>
+  <!-- Share dropdown (meta strip): copy URL, social intents, click-outside-close. -->
+  <script>
+    (function () {
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(text).catch(legacy);
+        }
+        return new Promise(function (resolve) { legacy(); resolve(); });
+        function legacy() {
+          var i = document.createElement('input');
+          i.value = text;
+          document.body.appendChild(i);
+          i.select();
+          try { document.execCommand('copy'); } catch (e) {}
+          i.remove();
+        }
+      }
+
+      document.addEventListener('click', function (e) {
+        var trigger = e.target.closest('[data-share]');
+        if (trigger) {
+          var details = trigger.closest('details.share');
+          var url = (details && details.dataset.shareUrl) || window.location.href;
+          var text = (details && details.dataset.shareText) || document.title;
+          var action = trigger.dataset.share;
+
+          if (action === 'copy') {
+            e.preventDefault();
+            copyText(url).then(function () {
+              trigger.classList.add('is-copied');
+              setTimeout(function () { trigger.classList.remove('is-copied'); }, 1600);
+            });
+            return;
+          }
+
+          var u;
+          if (action === 'bluesky') {
+            u = 'https://bsky.app/intent/compose?text=' + encodeURIComponent(text + ' ' + url);
+          } else if (action === 'mastodon') {
+            // Generic share endpoint that asks the user for their instance.
+            u = 'https://toot.kytta.dev/?text=' + encodeURIComponent(text + ' ' + url);
+          } else if (action === 'email') {
+            u = 'mailto:?subject=' + encodeURIComponent(text) + '&body=' + encodeURIComponent(url);
+          }
+          if (u) {
+            e.preventDefault();
+            window.open(u, action === 'email' ? '_self' : '_blank', 'noopener');
+          }
+          return;
+        }
+
+        // Click outside any open share dropdown closes it.
+        document.querySelectorAll('details.share[open]').forEach(function (d) {
+          if (!d.contains(e.target)) d.removeAttribute('open');
+        });
+      });
+    })();
+  </script>
   <!-- littlefoot init — runs after DOM + script are ready -->
   <script src="https://unpkg.com/littlefoot@4/dist/littlefoot.js" defer></script>
   <script>

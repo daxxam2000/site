@@ -1,35 +1,62 @@
 {%- comment -%}
   Coloured hero panel with an internal mono "meta strip" up top.
   Pass these params:
-    title        — the giant display headline (required)
-    tone         — "ink" (black) | "accent" (orange) | "soft" (grey). Default ink.
-    index        — small mono index e.g. "1.0" (top right)
-    num          — giant numeral (bottom right)
-    sub          — optional subtitle paragraph
-    section      — text for the SECTION field in the meta strip (defaults to title)
-    fao          — text for the FAO field (default "Reader")
+    title    — the giant display headline (required)
+    tone     — "ink" (black) | "accent" (orange) | "soft" (grey). Default ink.
+    index    — small mono index e.g. "1.0" (top right)
+    num      — giant numeral (bottom right)
+    sub      — optional subtitle paragraph
+    section  — value for the SECTION field. If omitted, the field is hidden
+               (so listing/index pages don't redundantly repeat their own title).
 {%- endcomment -%}
 {%- assign tone = include.tone | default: "ink" -%}
-{%- assign section = include.section | default: include.title -%}
-{%- assign fao = include.fao | default: "Reader" -%}
+{%- assign full_url = page.url | absolute_url -%}
+{%- assign share_text = page.title | default: site.title -%}
 <header class="hero hero--{{ tone }} bleed">
   <div class="meta-strip">
+
     <div>
       <span class="field-label">{{ site.title | escape }}</span>
       Personal site<br>© {{ site.time | date: "%Y" }}
     </div>
-    <div>
-      <span class="field-label">FAO</span>
-      {{ fao }}
-    </div>
+
+    <details class="share" data-share-url="{{ full_url }}" data-share-text="{{ share_text | escape }}">
+      <summary>
+        <span class="field-label">Share</span>
+        Link <span class="share__arrow" aria-hidden="true">↗</span>
+      </summary>
+      <div class="share__menu" role="menu">
+        <button type="button" class="share__opt" data-share="copy" role="menuitem">
+          <span class="share__opt-num">01</span>
+          <span class="share__opt-label">Copy URL</span>
+        </button>
+        <a class="share__opt" data-share="bluesky" target="_blank" rel="noopener" role="menuitem" href="#">
+          <span class="share__opt-num">02</span>
+          <span class="share__opt-label">Bluesky</span>
+        </a>
+        <a class="share__opt" data-share="mastodon" target="_blank" rel="noopener" role="menuitem" href="#">
+          <span class="share__opt-num">03</span>
+          <span class="share__opt-label">Mastodon</span>
+        </a>
+        <a class="share__opt" data-share="email" role="menuitem" href="#">
+          <span class="share__opt-num">04</span>
+          <span class="share__opt-label">Email</span>
+        </a>
+      </div>
+    </details>
+
+    {% if include.section %}
     <div>
       <span class="field-label">Section</span>
-      {{ section }}
+      {{ include.section }}
     </div>
+    {% endif %}
+
     <div>
       <span class="field-label">Updated</span>
       {{ site.time | date: "%Y.%m.%d" }}
     </div>
+
     <span class="mark" aria-hidden="true"></span>
   </div>
 
