@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Our photographic future"
-date: 2026-05-08 11:00:00 +0000
+date: 2026-05-06 11:00:00 +0000
 category: philosophy
 excerpt: "How vital are we to the apparatus we use?"
 ---
