@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 240" role="img" aria-label="Profile placeholder">
-  <rect width="200" height="240" fill="#111"/>
-  <circle cx="100" cy="92" r="38" fill="#f4f1ea"/>
-  <path d="M40,220 C40,170 160,170 160,220 Z" fill="#f4f1ea"/>
-  <text x="100" y="232" font-family="ui-monospace, Menlo, monospace" font-size="10" fill="#f4f1ea" text-anchor="middle" letter-spacing="2">PORTRAIT.JPG</text>
-</svg>
