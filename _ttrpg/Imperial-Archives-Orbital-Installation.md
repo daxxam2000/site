@@ -7,7 +7,7 @@ status: "Released"
 players: "2–5"
 tagline: "A rules-light 40k fan game. Non-commercial."
 blurb: "A 132-page tabletop RPG of investigation in the Warhammer 40k universe, Liminal Horror rules."
-cover: /assets/images/IA-OI-Facilitator.jpg
+cover: /assets/images/IA-OI-Facilitator.png
 links:
   - { label: "Microsite",   url: "https://example.com/dust-and-iron",                      featured: true }
   - { label: "DriveThruRPG", url: "https://www.drivethrurpg.com/" }
