@@ -14,7 +14,8 @@ links:
   - { label: "itch.io",      url: "https://itch.io/" }
 ---
 
-![Cover of the Imperial Archives: Orbital Installation Facilitator Manual](/assets/images/IA-OI-Facilitator.png)
+![Cover art of the Facilitator Manual]({{ '/assets/images/IA-OI-Facilitator.png' | relative_url }})
+
 
 An unofficial and not for commercial release sci-fi horror TTRPG, but you can download and play-test it for yourself. Give me some feedback on what you think works or not.
 
