@@ -7,23 +7,28 @@
   <meta name="Generator" content="Cocoa HTML Writer">
   <meta name="CocoaVersion" content="2685.5">
   <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #e5e7ec; -webkit-text-stroke: #e5e7ec}
     p.p2 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #383838; -webkit-text-stroke: #383838; min-height: 14.0px}
-    p.p4 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times; color: #0000e9; -webkit-text-stroke: #0000d3}
-    span.s1 {font-kerning: none}
-    span.s2 {text-decoration: underline ; font-kerning: none; color: #0000e9; -webkit-text-stroke: 0px #0000d3}
-    span.s3 {text-decoration: underline ; font-kerning: none; color: #0000d3; -webkit-text-stroke: 0px #0000d3}
-    span.s4 {text-decoration: underline ; font-kerning: none}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; color: #2a2a2a; -webkit-text-stroke: #2a2a2a; min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 12.0px 0.0px; font: 12.0px Times; color: #0000e9; -webkit-text-stroke: #0000c9}
+    span.s1 {font-kerning: none; color: #000000; -webkit-text-stroke: 0px #000000}
+    span.s2 {font-kerning: none; color: #c9ced6; -webkit-text-stroke: 0px #c9ced6}
+    span.s3 {font-kerning: none}
+    span.s4 {font-kerning: none; color: #bf5ef1; -webkit-text-stroke: 0px #bf5ef1}
+    span.s5 {font-kerning: none; color: #8ce951; -webkit-text-stroke: 0px #8ce951}
+    span.s6 {text-decoration: underline ; font-kerning: none; color: #0000e9; -webkit-text-stroke: 0px #0000c9}
+    span.s7 {text-decoration: underline ; font-kerning: none; color: #0000c9; -webkit-text-stroke: 0px #0000c9}
+    span.s8 {text-decoration: underline ; font-kerning: none}
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1">--- layout: default --- {% include hero.html title=page.title tone="accent" index="6.0" section="TTRPG" sub=page.tagline num=“page.year” %}</span></p>
-<p class="p2"><span class="s2"><a href="file:///Users/max/Documents/GitHub/site/_layouts/%7B%7B%20'/ttrpg/'%20%7C%20relative_url%20%7D%7D">TTRPG</a></span><span class="s1"> {% if page.status %}Â· {{ page.status }}{% endif %} {% if page.players %}Â· {{ page.players }} players{% endif %}</span></p>
-<p class="p1"><span class="s1">{{ content }} {% if page.links and page.links.size &gt; 0 %}</span></p>
-<p class="p2"><span class="s1">{% for l in page.links %} <a href="file:///Users/max/Documents/GitHub/site/_layouts/%7B%7B%20l.url%20%7D%7D"><span class="s3">{{ l.label }}</span></a> {% endfor %}</span></p>
-<p class="p1"><span class="s1">{% endif %}</span></p>
-<p class="p3"><span class="s1"></span><br></p>
-<p class="p4"><span class="s4"><a href="file:///Users/max/Documents/GitHub/site/_layouts/%7B%7B%20'/ttrpg/'%20%7C%20relative_url%20%7D%7D">â† All games</a></span></p>
+<p class="p1"><span class="s1">--- layout: default --- </span><span class="s2">{%</span><span class="s3"> </span><span class="s4">include</span><span class="s3"> hero</span><span class="s2">.</span><span class="s3">html title=page</span><span class="s2">.</span><span class="s3">title tone=</span><span class="s5">"accent"</span><span class="s3"> index=</span><span class="s5">"6.0"</span><span class="s3"> </span><span class="s4">section</span><span class="s3">=</span><span class="s5">"TTRPG"</span><span class="s3"> sub=page</span><span class="s2">.</span><span class="s3">tagline </span><span class="s2">%}</span></p>
+<p class="p2"><span class="s6"><a href="file:///Users/max/Documents/GitHub/site/_layouts/%7B%7B%20'/ttrpg/'%20%7C%20relative_url%20%7D%7D">TTRPG</a></span><span class="s3"> {% if page.status %}Â· {{ page.status }}{% endif %} {% if page.players %}Â· {{ page.players }} players{% endif %}</span></p>
+<p class="p3"><span class="s3">{{ content }} {% if page.links and page.links.size &gt; 0 %}</span></p>
+<p class="p2"><span class="s3">{% for l in page.links %} <a href="file:///Users/max/Documents/GitHub/site/_layouts/%7B%7B%20l.url%20%7D%7D"><span class="s7">{{ l.label }}</span></a> {% endfor %}</span></p>
+<p class="p3"><span class="s3">{% endif %}</span></p>
+<p class="p4"><span class="s3"></span><br></p>
+<p class="p5"><span class="s8"><a href="file:///Users/max/Documents/GitHub/site/_layouts/%7B%7B%20'/ttrpg/'%20%7C%20relative_url%20%7D%7D">â† All games</a></span></p>
 </body>
 </html>
